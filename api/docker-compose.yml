@@ -1,0 +1,64 @@
+version: '3.7'
+
+services:
+  api:
+    container_name: api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    ports:
+      - ${SERVER_PORT}:3000
+      - 9229:9229
+    depends_on:
+      - db
+      # - redis
+
+  web_client:
+    container_name: web_client
+    build:
+      context: ../web
+      dockerfile: Dockerfile
+    volumes:
+      - ../web:/app
+    env_file:
+      - .env
+    ports:
+      - 80:3000
+    depends_on:
+      - api
+
+  db:
+    image: postgres:12-alpine
+    container_name: db
+    restart: always
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
+      PGDATA: /var/lib/postgresql/data
+    ports:
+      - ${DATABASE_PORT}:5432
+    volumes:
+      - ../db:/var/lib/postgresql/data
+
+  # redis:
+  #   container_name: redis
+  #   image: redis:6.0.9-alpine
+
+  pgAdmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@hello.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    depends_on:
+      - db
+    volumes:
+      - /.pgadmin
+    ports:
+      - 5050:80

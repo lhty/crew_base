@@ -1,0 +1,40 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input CreateUserInput {
+  email: String!
+  firstName: String!
+  lastName: String!
+  password: String!
+  role: String = "guest"
+}
+
+input logInInput {
+  email: String!
+  password: String!
+}
+
+type logInOutput {
+  jwt: String!
+  user: User!
+}
+
+type Mutation {
+  createUser(input: CreateUserInput!): User!
+  login(input: logInInput!): logInOutput!
+}
+
+type Query {
+  user(id: String!): User
+  users: [User!]!
+  whoAmI: User!
+}
+
+type User {
+  email: String!
+  firstName: String!
+  id: String!
+  lastName: String!
+  role: String!
+}
