@@ -53,6 +53,7 @@ services:
 
   pgAdmin:
     image: dpage/pgadmin4
+    container_name: pgadmin
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@hello.com
       PGADMIN_DEFAULT_PASSWORD: admin

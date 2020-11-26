@@ -2,19 +2,15 @@
   "name": "crew_base",
   "version": "1.0.0",
   "description": "",
-  "main": ".eslintrc.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dock": "docker-compose --env-file ./api/.env up",
+    "build": "docker-compose --env-file ./api/.env up --build"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lhty/nest-auth-template.git"
+    "url": "git+https://github.com/lhty/crew_base.git"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/lhty/nest-auth-template/issues"
-  },
-  "homepage": "https://github.com/lhty/nest-auth-template#readme"
+  "license": "ISC"
 }

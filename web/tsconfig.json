@@ -21,7 +21,7 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx", "pages/_app.tsx"
+    "**/*.tsx", "src/pages/_app.tsx", "src/utils/createWithApollo.js"
   ],
   "exclude": [
     "node_modules"

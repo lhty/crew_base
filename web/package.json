@@ -5,16 +5,28 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "get-types": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
-    "@material-ui/core": "^4.11.1",
-    "@material-ui/icons": "^4.9.1",
+    "@apollo/client": "^3.2.9",
+    "@chakra-ui/icons": "^1.0.1",
+    "@chakra-ui/react": "^1.0.1",
+    "@emotion/react": "^11.1.1",
+    "@emotion/styled": "^11.0.0",
+    "framer-motion": "^2.9.4",
+    "graphql": "^15.4.0",
+    "graphql-tag": "^2.11.0",
     "next": "10.0.3",
+    "next-apollo": "^5.0.4",
     "react": "17.0.1",
     "react-dom": "17.0.1"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^1.19.3",
+    "@graphql-codegen/typescript": "^1.18.1",
+    "@graphql-codegen/typescript-operations": "^1.17.12",
+    "@graphql-codegen/typescript-react-apollo": "^2.2.1",
     "@types/node": "^14.14.9",
     "@types/react": "^17.0.0",
     "typescript": "^4.1.2"
