@@ -29,7 +29,6 @@ export default function Login() {
     event: FormEvent<HTMLFormElement>
   ): Promise<void> => {
     event.preventDefault();
-    console.log("loading : ", loading);
     try {
       await login({
         variables: {
@@ -39,7 +38,6 @@ export default function Login() {
       console.log("data :", data);
       setShowPassword(false);
     } catch {
-      console.log("error :", error);
       // setEmail("");
       // setPassword("");
       setShowPassword(false);

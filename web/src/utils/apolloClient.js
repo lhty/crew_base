@@ -8,16 +8,10 @@ export const APOLLO_STATE_PROP_NAME = "__APOLLO_STATE__";
 let apolloClient;
 
 function createApolloClient() {
-  const isBrowser = typeof window !== "undefined";
-  const isDocker = process.env.GPQL_ENDPOINT === "http://api:3000/graphql";
-
   return new ApolloClient({
     ssrMode: typeof window === "undefined",
     link: new HttpLink({
-      uri:
-        isDocker && isBrowser
-          ? "http://api:3000/graphql"
-          : process.env.GPQL_ENDPOINT,
+      uri: process.env.GRAPHQL || "http://localhost:3000/graphql",
       credentials: "same-origin", // Additional fetch() options like `credentials` or `headers`
     }),
     cache: new InMemoryCache({
