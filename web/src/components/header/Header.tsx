@@ -10,7 +10,7 @@ const Header = () => {
       justify="space-between"
       wrap="wrap"
       padding="1rem"
-      bg="teal.900"
+      bg="blue.800"
       color="white"
     >
       <Flex align="center" mr={3}>
@@ -20,7 +20,6 @@ const Header = () => {
           </Heading>
         </Link>
       </Flex>
-
       <ColorModeSwitcher />
     </Flex>
   );

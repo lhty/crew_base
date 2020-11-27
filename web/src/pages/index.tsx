@@ -14,14 +14,14 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
   if (!user) {
     return {
       redirect: {
-        destination: "/login",
+        destination: "/auth/login",
         permanent: true,
       },
     };
   }
 
   return {
-    props: { user }, // will be passed to the page component as props
+    props: { user },
   };
 };
 

@@ -4,6 +4,7 @@
   "description": "",
   "scripts": {
     "dock": "docker-compose --env-file ./api/.env up",
+    "stop": "docker-compose --env-file ./api/.env down -v",
     "build": "docker-compose --env-file ./api/.env up --build"
   },
   "repository": {
