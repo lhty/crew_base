@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { User } from '../user/user.entity';
 
 @Injectable()
 export class AuthService {
   constructor(private readonly jwtService: JwtService) {}
-  signJwt(input: { [key: string]: string }): string {
-    return this.jwtService.sign({ payload: input });
+  signJwt(payload: Partial<User>): string {
+    return this.jwtService.sign({ payload });
   }
   verifyJwt(token: string) {
     try {

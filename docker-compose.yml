@@ -5,29 +5,29 @@ services:
     container_name: api
     build:
       context: ./api
-      dockerfile: Dockerfile
-      args:
-        - SERVER_PORT=${SERVER_PORT}
-        - JWT_SECRET=${JWT_SECRET}
-        - JWT_EXPIRE=${JWT_EXPIRE}
-        - REDIS_HOST=${REDIS_HOST}
-        - REDIS_PORT=${REDIS_PORT}
-        - DATABASE_HOST=${DATABASE_HOST}
-        - DATABASE_PORT=${DATABASE_PORT}
-        - DATABASE_NAME=${DATABASE_NAME}
-        - DATABASE_USER=${DATABASE_USER}
-        - DATABASE_PASSWORD=${DATABASE_PASSWORD}
-    environment:
-      - SERVER_PORT:${SERVER_PORT}
-      - JWT_SECRET:${JWT_SECRET}
-      - JWT_EXPIRE:${JWT_EXPIRE}
-      - REDIS_HOST:${REDIS_HOST}
-      - REDIS_PORT=:${REDIS_PORT}
-      - DATABASE_HOST:${DATABASE_HOST}
-      - DATABASE_PORT:${DATABASE_PORT}
-      - DATABASE_NAME:${DATABASE_NAME}
-      - DATABASE_USER:${DATABASE_USER}
-      - DATABASE_PASSWORD:${DATABASE_PASSWORD}
+    #   dockerfile: Dockerfile
+    #   # args:
+    #   #   - SERVER_PORT=${SERVER_PORT}
+    #   #   - JWT_SECRET=${JWT_SECRET}
+    #   #   - JWT_EXPIRE=${JWT_EXPIRE}
+    #   #   - REDIS_HOST=${REDIS_HOST}
+    #   #   - REDIS_PORT=${REDIS_PORT}
+    #   #   - DATABASE_HOST=${DATABASE_HOST}
+    #   #   - DATABASE_PORT=${DATABASE_PORT}
+    #   #   - DATABASE_NAME=${DATABASE_NAME}
+    #   #   - DATABASE_USER=${DATABASE_USER}
+    #   #   - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+    # environment:
+    #   - SERVER_PORT:${SERVER_PORT}
+    #   - JWT_SECRET:${JWT_SECRET}
+    #   - JWT_EXPIRE:${JWT_EXPIRE}
+    #   - REDIS_HOST:${REDIS_HOST}
+    #   - REDIS_PORT=:${REDIS_PORT}
+    #   - DATABASE_HOST:${DATABASE_HOST}
+    #   - DATABASE_PORT:${DATABASE_PORT}
+    #   - DATABASE_NAME:${DATABASE_NAME}
+    #   - DATABASE_USER:${DATABASE_USER}
+    #   - DATABASE_PASSWORD:${DATABASE_PASSWORD}
     env_file:
       - .env
     volumes:
@@ -45,8 +45,8 @@ services:
     build:
       context: ./web
       dockerfile: Dockerfile
-    environment:
-      GRAPHQL: api
+    # environment:
+    #   GRAPHQL: api
     volumes:
       - ./web:/app
     ports:

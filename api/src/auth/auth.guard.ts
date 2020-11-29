@@ -20,7 +20,6 @@ export class GqlAuthGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<any> {
     const req = await this.getRequest(context);
-
     if (!req.headers.authorization) {
       throw new UnauthorizedException('Unauthorized.');
     }
