@@ -1,7 +1,6 @@
 import {
   BadRequestException,
   CanActivate,
-  createParamDecorator,
   ExecutionContext,
   Injectable,
   UnauthorizedException,
@@ -13,13 +12,13 @@ import { AuthService } from './auth.service';
 export class GqlAuthGuard implements CanActivate {
   constructor(private readonly authService: AuthService) {}
 
-  async getRequest(context: ExecutionContext): Promise<any> {
+  getRequest(context: ExecutionContext): any {
     const ctx = GqlExecutionContext.create(context);
     return ctx.getContext().req;
   }
 
-  async canActivate(context: ExecutionContext): Promise<any> {
-    const req = await this.getRequest(context);
+  canActivate(context: ExecutionContext): boolean {
+    const req = this.getRequest(context);
     if (!req.headers.authorization) {
       throw new UnauthorizedException('Unauthorized.');
     }
@@ -31,14 +30,8 @@ export class GqlAuthGuard implements CanActivate {
 
     if (!payload) throw new UnauthorizedException('Token not valid');
 
-    req.email = payload;
+    req.user = typeof payload === 'string' ? { email: payload } : payload;
+
     return true;
   }
 }
-
-export const GqlUserEmail = createParamDecorator(
-  (_, context: ExecutionContext) => {
-    const ctx = GqlExecutionContext.create(context);
-    return ctx.getContext().req.email;
-  },
-);

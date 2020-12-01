@@ -12,7 +12,7 @@ function createApolloClient() {
     ssrMode: typeof window === "undefined",
     link: new HttpLink({
       uri: process.env.GRAPHQL || "http://localhost:3000/graphql",
-      credentials: "same-origin", // Additional fetch() options like `credentials` or `headers`
+      credentials: "include", // Additional fetch() options like `credentials` or `headers`
     }),
     cache: new InMemoryCache({
       typePolicies: {

@@ -9,6 +9,10 @@ import { GraphQLError, GraphQLFormattedError } from 'graphql';
       sortSchema: true,
       debug: false,
       playground: true,
+      cors: {
+        credentials: true,
+        origin: true,
+      },
       formatError: (error: GraphQLError) => {
         const graphQLFormattedError: GraphQLFormattedError = {
           message: error.extensions.exception.response.message || error.message,
