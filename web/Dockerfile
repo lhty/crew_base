@@ -10,6 +10,7 @@ RUN npm i --quiet && npm cache clean --force
 COPY . .
 
 EXPOSE 3000
+EXPOSE 6006
 EXPOSE 80
 
 CMD "npm" "run" "dev"

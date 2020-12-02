@@ -1,5 +1,5 @@
 import { UseGuards } from '@nestjs/common';
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { User } from '../user/user.entity';
 import { GqlGetCurrentUser } from './auth.decorators';
 import { GqlAuthGuard } from './auth.guard';
@@ -17,7 +17,8 @@ export class AuthResolver {
   }
 
   @Mutation(() => logInOutput, { name: 'login' })
-  async LOGIN(@Args('input') input: logInInput) {
+  async LOGIN(@Context() ctx: any, @Args('input') input: logInInput) {
+    ctx.res.cookie('some-cookie', 'some-value-test');
     return this.authService.logIn(input);
   }
 }

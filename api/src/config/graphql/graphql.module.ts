@@ -11,8 +11,11 @@ import { GraphQLError, GraphQLFormattedError } from 'graphql';
       playground: true,
       cors: {
         credentials: true,
-        origin: true,
+        origin: process.env.CLIENT
+          ? process.env.CLIENT.split(',')
+          : ['http://localhost:8080'],
       },
+      context: ({ req, res }) => ({ req, res }),
       formatError: (error: GraphQLError) => {
         const graphQLFormattedError: GraphQLFormattedError = {
           message: error.extensions.exception.response.message || error.message,

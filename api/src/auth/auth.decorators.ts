@@ -6,6 +6,10 @@ export const GqlGetCurrentUser = createParamDecorator(
     GqlExecutionContext.create(context).getContext().req.user,
 );
 
+export const GqlGetCtx = createParamDecorator((_, context: ExecutionContext) =>
+  GqlExecutionContext.create(context).getContext(),
+);
+
 export const GqlGetCookies = createParamDecorator(
   (key: string, context: ExecutionContext) => {
     const request = GqlExecutionContext.create(context).getContext().req;

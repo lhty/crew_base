@@ -4,6 +4,7 @@ import { User, UserRole } from './user.entity';
 import { Repository } from 'typeorm';
 import { CreateUserInput } from './dto/user.dto';
 import { hash } from 'argon2';
+import PostgresErrorCode from '../config/database/postgresErrorCode.enum';
 
 @Injectable()
 export class UserService {
@@ -29,7 +30,9 @@ export class UserService {
       return user;
     } catch (error) {
       throw new HttpException(
-        error.code === '23505' ? 'Email already exists.' : error.message,
+        error.code === PostgresErrorCode.UniqueViolation
+          ? 'User with that email already exists.'
+          : error.message,
         error.status,
       );
     }
