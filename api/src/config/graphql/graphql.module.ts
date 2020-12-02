@@ -11,8 +11,8 @@ import { GraphQLError, GraphQLFormattedError } from 'graphql';
       playground: true,
       cors: {
         credentials: true,
-        origin: process.env.CLIENT
-          ? process.env.CLIENT.split(',')
+        origin: process.env.CLIENTS
+          ? process.env.CLIENTS.split(',')
           : ['http://localhost:8080'],
       },
       context: ({ req, res }) => ({ req, res }),
@@ -25,4 +25,8 @@ import { GraphQLError, GraphQLFormattedError } from 'graphql';
     }),
   ],
 })
-export class GraphqlModule {}
+export class GraphqlModule {
+  constructor() {
+    console.log(process.env.CLIENTS.split(','));
+  }
+}

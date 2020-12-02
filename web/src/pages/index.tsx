@@ -1,28 +1,31 @@
-import { GetServerSideProps } from "next";
+import { Flex, Spinner } from "@chakra-ui/react";
+import Router from "next/router";
+import React from "react";
+import { useMeQuery } from "../generated/graphql";
 
-interface Props {
-  user: null;
-}
+const index = () => {
+  const { data, loading, error } = useMeQuery();
 
-const index = ({ user }: Props) => {
-  return <></>;
-};
+  if (loading)
+    return (
+      <Flex height="70vh" width="full" align="center" justifyContent="center">
+        <Spinner
+          thickness="4px"
+          speed="0.65s"
+          emptyColor="gray.200"
+          color="blue.500"
+          size="xl"
+        />
+      </Flex>
+    );
 
-export const getServerSideProps: GetServerSideProps = async ctx => {
-  const user = null;
+  if (error) Router.push("/auth");
 
-  if (!user) {
-    return {
-      redirect: {
-        destination: "/auth",
-        permanent: true,
-      },
-    };
-  }
-
-  return {
-    props: { user },
-  };
+  return (
+    <Flex height="70vh" width="full" align="center" justifyContent="center">
+      {JSON.stringify(data?.whoAmI, null, 2)}
+    </Flex>
+  );
 };
 
 export default index;

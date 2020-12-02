@@ -7,8 +7,8 @@ async function bootstrap() {
 
   app.enableCors({
     credentials: true,
-    origin: process.env.CLIENT
-      ? process.env.CLIENT.split(',')
+    origin: process.env.CLIENTS
+      ? process.env.CLIENTS.split(',')
       : ['http://localhost:8080'],
   });
 

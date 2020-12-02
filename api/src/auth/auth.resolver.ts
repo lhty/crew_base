@@ -18,7 +18,8 @@ export class AuthResolver {
 
   @Mutation(() => logInOutput, { name: 'login' })
   async LOGIN(@Context() ctx: any, @Args('input') input: logInInput) {
-    ctx.res.cookie('some-cookie', 'some-value-test');
-    return this.authService.logIn(input);
+    const { jwt, user } = await this.authService.logIn(input);
+    ctx.res.cookie('token', jwt);
+    return { jwt, user };
   }
 }
