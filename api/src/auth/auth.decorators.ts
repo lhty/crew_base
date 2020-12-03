@@ -10,9 +10,9 @@ export const GqlGetCtx = createParamDecorator((_, context: ExecutionContext) =>
   GqlExecutionContext.create(context).getContext(),
 );
 
-export const GqlGetCookies = createParamDecorator(
-  (key: string, context: ExecutionContext) => {
-    const request = GqlExecutionContext.create(context).getContext().req;
-    return key ? request.cookies?.[key] : request.cookies;
-  },
-);
+// export const GqlGetCookieKey = createParamDecorator(
+//   (key: string, context: ExecutionContext) => {
+//     const request = GqlExecutionContext.create(context).getContext().req;
+//     return key ? request.cookies?.[key] : request.cookies;
+//   },
+// );

@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import config from '../../../ormconfig';
+import config from './ormconfig';
 import { ConnectionOptions } from 'typeorm';
 
 @Module({

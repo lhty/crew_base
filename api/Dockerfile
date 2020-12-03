@@ -8,6 +8,9 @@ RUN npm i --quiet && npm cache clean --force
 
 COPY . .
 
+COPY ../config/ormconfig.json .
+RUN npm run update-database
+
 EXPOSE 3000
 
 CMD ["npm", "run", "start:debug"]

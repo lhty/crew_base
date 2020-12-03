@@ -1,26 +1,32 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { verify } from 'argon2';
 import { Repository } from 'typeorm';
 import { User } from '../user/user.entity';
-import { logInInput, logInOutput } from './dto/logIn.dto';
+import { logInInput } from './dto/logIn.dto';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly jwtService: JwtService,
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+    private readonly jwtService: JwtService,
   ) {}
-  signJwt(payload: Partial<User>): string {
-    return this.jwtService.sign({ payload });
-  }
-  verifyJwt(token: string) {
+
+  verifyAuthToken(token: string): string {
+    if (!token) {
+      throw new UnauthorizedException('Unauthorized.');
+    }
     try {
-      return this.jwtService.verify(token);
+      const { payload } = this.jwtService.verify(token);
+      return payload;
     } catch {
-      return false;
+      throw new UnauthorizedException('Token not valid');
     }
   }
 
@@ -28,17 +34,12 @@ export class AuthService {
     return await this.userRepository.findOne(user);
   }
 
-  async logIn({ email, password }: logInInput): Promise<logInOutput> {
+  async logIn({ email, password }: logInInput): Promise<User> {
     try {
       const user = await this.userRepository.findOne({ email });
-
       if (!user || !(await verify(user.hashPassword, password)))
         throw new Error('Wrong email or password.');
-
-      return {
-        user,
-        jwt: this.signJwt({ email: user.email }),
-      };
+      return user;
     } catch (error) {
       throw new HttpException(error.message, error.status);
     }

@@ -1,29 +1,27 @@
 import { Flex, Spinner } from "@chakra-ui/react";
 import Router from "next/router";
-import React from "react";
 import { useMeQuery } from "../generated/graphql";
+import { UserRole } from "../utils/enums/Role";
 
 const index = () => {
-  const { data, loading, error } = useMeQuery();
-
-  if (loading)
-    return (
-      <Flex height="70vh" width="full" align="center" justifyContent="center">
-        <Spinner
-          thickness="4px"
-          speed="0.65s"
-          emptyColor="gray.200"
-          color="blue.500"
-          size="xl"
-        />
-      </Flex>
-    );
+  const { data, error } = useMeQuery();
 
   if (error) Router.push("/auth");
 
+  if (data?.whoAmI.role === UserRole.ADMIN) Router.push("/dashboard");
+  if (data?.whoAmI.role === UserRole.AGENT) Router.push("/company");
+  if (data?.whoAmI.role === UserRole.USER) Router.push("/client");
+  if (data?.whoAmI.role === UserRole.GUEST) Router.push("/auth/activate");
+
   return (
     <Flex height="70vh" width="full" align="center" justifyContent="center">
-      {JSON.stringify(data?.whoAmI, null, 2)}
+      <Spinner
+        thickness="4px"
+        speed="0.65s"
+        emptyColor="gray.200"
+        color="blue.500"
+        size="xl"
+      />
     </Flex>
   );
 };

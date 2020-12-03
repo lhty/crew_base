@@ -1,6 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-require('dotenv').config({ path: '../.env' });
-
 export default {
   type: 'postgres',
   host: process.env.DATABASE_HOST,
