@@ -30,17 +30,17 @@ import { useLoginMutation } from "../../generated/graphql";
 
 import ErrorMessage from "../../components/misc/ErrorMessage";
 
+interface Ivalues {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  password: string;
+  showPassword: boolean;
+}
+
 export default function Index() {
   const [login, { data, loading, error }] = useLoginMutation();
-
-  interface Ivalues {
-    firstName: string;
-    lastName: string;
-    email: string;
-    phone: string;
-    password: string;
-    showPassword: boolean;
-  }
 
   const [values, setValue] = useReducer(
     (values: Ivalues, update: Partial<Ivalues>) => ({
@@ -60,6 +60,7 @@ export default function Index() {
   const handleSubmit = async (
     event: FormEvent<HTMLFormElement>
   ): Promise<void> => {
+    console.log(event);
     event.preventDefault();
     try {
       await login({
@@ -243,7 +244,7 @@ export default function Index() {
                         children={<EmailIcon color="gray.600" />}
                       />
                       <Input
-                        id="email"
+                        id="singnemail"
                         type="email"
                         placeholder="email"
                         onChange={(
@@ -261,7 +262,7 @@ export default function Index() {
                         children={<UnlockIcon color="gray.600" />}
                       />
                       <Input
-                        id="password"
+                        id="singnemailpassword"
                         type={values.showPassword ? "text" : "password"}
                         placeholder="*******"
                         onChange={(

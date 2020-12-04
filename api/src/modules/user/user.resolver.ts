@@ -1,8 +1,8 @@
 import { UseGuards, ValidationPipe } from '@nestjs/common';
 import { Resolver, Args, Query, Mutation } from '@nestjs/graphql';
 import { GqlAuthGuard } from '../auth/auth.guard';
-import { CreateUserInput } from './dto/user.dto';
-import { User } from './user.entity';
+import { CreateUserInput } from '../../dto/user.dto';
+import { User } from '../../entities/user.entity';
 import { UserService } from './user.service';
 
 @Resolver('user')

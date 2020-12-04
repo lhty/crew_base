@@ -1,11 +1,11 @@
 import { UseGuards } from '@nestjs/common';
 import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { JwtService } from '@nestjs/jwt';
-import { User } from '../user/user.entity';
+import { User } from '../../entities/user.entity';
+import { logInInput, logInOutput } from '../../dto/logIn.dto';
 import { GqlGetCurrentUser } from './auth.decorators';
 import { GqlAuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
-import { logInInput, logInOutput } from './dto/logIn.dto';
 
 @Resolver()
 export class AuthResolver {
