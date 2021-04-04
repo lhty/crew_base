@@ -4,13 +4,18 @@ import * as helmet from 'helmet';
 import * as rateLimit from 'express-rate-limit';
 // import * as csurf from 'csurf';
 
-const allowedOrigins = process.env.CLIENTS
-  ? process.env.CLIENTS.split(',')
+const allowedOrigins = process.env.CORS_ORIGINS
+  ? process.env.CORS_ORIGINS.split(',')
   : ['http://localhost:8080'];
 
 export function setupSecurity(app: INestApplication): void {
   // Set security-related HTTP headers
-  app.use(helmet());
+  app.use(
+    helmet({
+      contentSecurityPolicy:
+        process.env.NODE_ENV === 'production' ? undefined : false,
+    }),
+  );
   // Enable Cross-origin resource sharing for a list of domains
   app.enableCors({
     origin: (origin, callback) => {
@@ -33,8 +38,7 @@ export function setupSecurity(app: INestApplication): void {
     }),
   );
 
-  app.use(cookieParser());
-  // TBD (CSRF or XSRF)
-  // Requires session middleware or a cookie-parser to be initialized first
-  // app.use(csurf());
+  app.use(cookieParser(process.env.COOKIE_SECRET));
+  // CSRF
+  // app.use(csusrf({ cookie: { key: '_csrf', httpOnly: true } }));
 }

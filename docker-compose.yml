@@ -7,11 +7,12 @@ services:
       context: ./api
     env_file:
       - .env
+    command: npm run start:dev
     volumes:
       - ./api:/app
+      - /app/node_modules
     ports:
-      - ${SERVER_PORT}:3000
-      - 9229:9229
+      - ${API_PORT}:3000
     tty: true
     depends_on:
       - db
@@ -19,16 +20,15 @@ services:
 
   web_client:
     container_name: web_client
-    restart: always
     build:
       context: ./web
     env_file:
       - .env
+    command: npm start
     volumes:
       - ./web:/app
     ports:
       - 80:3000
-      - 6006:6006
     depends_on:
       - api
 

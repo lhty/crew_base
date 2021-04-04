@@ -13,6 +13,28 @@ export type Scalars = {
   Float: number;
 };
 
+export type Agency = {
+  __typename?: 'Agency';
+  bases: Array<Base>;
+  email: Scalars['String'];
+  employees: Array<User>;
+  id: Scalars['String'];
+  name: Scalars['String'];
+  phone: Scalars['String'];
+};
+
+export type Base = {
+  __typename?: 'Base';
+  agencies: Array<Agency>;
+  id: Scalars['String'];
+  users: Array<User>;
+};
+
+export type Contract = {
+  __typename?: 'Contract';
+  id: Scalars['String'];
+};
+
 export type CreateUserInput = {
   email: Scalars['String'];
   firstName: Scalars['String'];
@@ -20,17 +42,6 @@ export type CreateUserInput = {
   password: Scalars['String'];
   phone: Scalars['String'];
   role?: Maybe<Scalars['String']>;
-};
-
-export type LogInInput = {
-  email: Scalars['String'];
-  password: Scalars['String'];
-};
-
-export type LogInOutput = {
-  __typename?: 'logInOutput';
-  jwt: Scalars['String'];
-  user: User;
 };
 
 export type Mutation = {
@@ -51,9 +62,9 @@ export type MutationLoginArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  currentUser: User;
   user?: Maybe<User>;
   users: Array<User>;
-  whoAmI: User;
 };
 
 
@@ -63,6 +74,8 @@ export type QueryUserArgs = {
 
 export type User = {
   __typename?: 'User';
+  agency?: Maybe<Agency>;
+  contract?: Maybe<Contract>;
   email: Scalars['String'];
   firstName: Scalars['String'];
   id: Scalars['String'];
@@ -71,9 +84,20 @@ export type User = {
   role: Scalars['String'];
 };
 
+export type LogInInput = {
+  email: Scalars['String'];
+  password: Scalars['String'];
+};
+
+export type LogInOutput = {
+  __typename?: 'logInOutput';
+  jwt: Scalars['String'];
+  user: User;
+};
+
 export type UserFragment = (
   { __typename?: 'User' }
-  & Pick<User, 'id' | 'firstName' | 'lastName' | 'email' | 'role'>
+  & Pick<User, 'id' | 'firstName' | 'lastName' | 'email' | 'phone' | 'role'>
 );
 
 export type CreateUserMutationVariables = Exact<{
@@ -111,7 +135,7 @@ export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type MeQuery = (
   { __typename?: 'Query' }
-  & { whoAmI: (
+  & { currentUser: (
     { __typename?: 'User' }
     & UserFragment
   ) }
@@ -123,6 +147,7 @@ export const UserFragmentDoc = gql`
   firstName
   lastName
   email
+  phone
   role
 }
     `;
@@ -195,7 +220,7 @@ export type LoginMutationResult = Apollo.MutationResult<LoginMutation>;
 export type LoginMutationOptions = Apollo.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
 export const MeDocument = gql`
     query me {
-  whoAmI {
+  currentUser {
     ...User
   }
 }

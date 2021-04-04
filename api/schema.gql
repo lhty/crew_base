@@ -2,13 +2,76 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Agency {
+  address: String
+  base: Base!
+  contracts: [Contract!]!
+  email: String!
+  id: String!
+  name: String!
+  phone: String!
+}
+
+type Base {
+  agency: Agency!
+  clients: [User!]!
+  id: String!
+}
+
+type Company {
+  address: String
+  email: String!
+  fleet: Vessel
+  id: String!
+  phone: String!
+}
+
+type Contract {
+  agency: Agency!
+  client: User!
+  id: String!
+  status: String!
+  vessel: Vessel!
+}
+
 input CreateUserInput {
+  address: String = null
   email: String!
   firstName: String!
   lastName: String!
   password: String!
   phone: String!
-  role: String = "guest"
+}
+
+type Mutation {
+  createClient(input: CreateUserInput!): User!
+  login(input: logInInput!): logInOutput!
+}
+
+type Query {
+  AllUsers: [User!]!
+  currentUser: User!
+  user(id: String!): User
+}
+
+type User {
+  address: String
+  bases: Base
+  contract: Contract
+  email: String!
+  firstName: String!
+  id: String!
+  lastName: String!
+  phone: String!
+  role: String!
+}
+
+type Vessel {
+  company: Company
+  contracts: [Contract!]
+  id: String!
+  name: String!
+  phone: String!
 }
 
 input logInInput {
@@ -19,24 +82,4 @@ input logInInput {
 type logInOutput {
   jwt: String!
   user: User!
-}
-
-type Mutation {
-  createUser(input: CreateUserInput!): User!
-  login(input: logInInput!): logInOutput!
-}
-
-type Query {
-  user(id: String!): User
-  users: [User!]!
-  whoAmI: User!
-}
-
-type User {
-  email: String!
-  firstName: String!
-  id: String!
-  lastName: String!
-  phone: String!
-  role: String!
 }

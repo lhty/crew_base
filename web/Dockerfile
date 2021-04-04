@@ -1,16 +1,8 @@
-FROM node:14.15.0-alpine3.10
-
-WORKDIR /app
-
-ENV NEXT_TELEMETRY_DISABLED 1
-
-COPY package.json package.lock*.json ./
-RUN npm i --quiet && npm cache clean --force
-
-COPY . .
+FROM node:15.6.0-alpine3.10
 
 EXPOSE 3000
-EXPOSE 6006
-EXPOSE 80
+WORKDIR /app
 
-CMD "npm" "run" "dev"
+ADD . /app
+RUN npm i --quiet && npm cache clean --force
+

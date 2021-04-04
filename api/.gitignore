@@ -3,6 +3,7 @@
 /node_modules
 .env
 ormconfig.json
+package-lock.json
 
 # Logs
 logs
@@ -20,7 +21,7 @@ lerna-debug.log*
 /.nyc_output
 
 # IDEs and editors
-/.idea
+.idea
 .project
 .classpath
 .c9/

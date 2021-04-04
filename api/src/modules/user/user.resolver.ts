@@ -1,28 +1,28 @@
 import { UseGuards, ValidationPipe } from '@nestjs/common';
 import { Resolver, Args, Query, Mutation } from '@nestjs/graphql';
-import { GqlAuthGuard } from '../auth/auth.guard';
-import { CreateUserInput } from '../../dto/user.dto';
 import { User } from '../../entities/user.entity';
+import { AuthGuard } from '../../guards/auth.guard';
+import { CreateUserInput } from './dto/user.dto';
 import { UserService } from './user.service';
 
 @Resolver('user')
 export class UserResolver {
-  constructor(private userService: UserService) {}
+  constructor(private readonly userService: UserService) {}
 
-  @UseGuards(GqlAuthGuard)
-  @Query(() => [User], { name: 'users' })
-  async USERS(): Promise<User[]> {
-    return this.userService.getUsers();
+  @UseGuards(AuthGuard)
+  @Query(() => [User], { name: 'AllUsers' })
+  async USERS() {
+    return this.userService.getAllUsers();
   }
 
-  @UseGuards(GqlAuthGuard)
+  @UseGuards(AuthGuard)
   @Query(() => User, { name: 'user', nullable: true })
-  async USER(@Args('id') id: string): Promise<User> {
+  async USER(@Args('id') id: string) {
     return this.userService.getUserById(id);
   }
 
-  @Mutation(() => User, { name: 'createUser' })
-  async CREATEUSER(
+  @Mutation(() => User, { name: 'createClient' })
+  async CREATE_CLIENT(
     @Args('input', new ValidationPipe()) input: CreateUserInput,
   ): Promise<User> {
     return this.userService.createUser(input);

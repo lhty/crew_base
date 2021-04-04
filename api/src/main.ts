@@ -8,6 +8,6 @@ async function bootstrap() {
   // SECURITY
   setupSecurity(app);
 
-  await app.listen(process.env.SERVER_PORT || 3000);
+  await app.listen(process.env.API_PORT || 3000);
 }
 bootstrap();

@@ -1,30 +1,25 @@
-import { UseGuards } from '@nestjs/common';
+import { ExecutionContext, UseGuards } from '@nestjs/common';
 import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { JwtService } from '@nestjs/jwt';
-import { User } from '../../entities/user.entity';
-import { logInInput, logInOutput } from '../../dto/logIn.dto';
-import { GqlGetCurrentUser } from './auth.decorators';
-import { GqlAuthGuard } from './auth.guard';
+import { logInInput, logInOutput } from './dto/logIn.dto';
+import { AuthGuard } from '../../guards/auth.guard';
 import { AuthService } from './auth.service';
+import { User } from '../../entities/user.entity';
 
 @Resolver()
 export class AuthResolver {
-  constructor(
-    private readonly authService: AuthService,
-    private readonly jwtService: JwtService,
-  ) {}
+  constructor(private readonly authService: AuthService) {}
 
-  @Query(() => User, { name: 'whoAmI' })
-  @UseGuards(GqlAuthGuard)
-  async ME(@GqlGetCurrentUser() user: Partial<User>) {
-    return this.authService.getUserByFields(user);
+  @Query(() => User, { name: 'currentUser' })
+  @UseGuards(AuthGuard)
+  async ME(@Context() ctx: ExecutionContext) {
+    return await this.authService.getUserByToken(ctx);
   }
 
   @Mutation(() => logInOutput, { name: 'login' })
-  async LOGIN(@Context() ctx: any, @Args('input') input: logInInput) {
-    const user = await this.authService.logIn(input);
-    const jwt = this.jwtService.sign({ email: user.email });
-    ctx.res.cookie('token', jwt);
-    return { jwt, user };
+  async LOGIN(
+    @Context() ctx: ExecutionContext,
+    @Args('input') input: logInInput,
+  ) {
+    return await this.authService.logIn(input, ctx);
   }
 }

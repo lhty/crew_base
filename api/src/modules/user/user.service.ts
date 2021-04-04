@@ -1,10 +1,10 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User, UserRole } from '../../entities/user.entity';
 import { Repository } from 'typeorm';
-import { CreateUserInput } from '../../dto/user.dto';
-import { hash } from 'argon2';
-import PostgresErrorCode from '../../config/database/postgresErrorCode.enum';
+import { User } from '../../entities/user.entity';
+import { CreateUserInput } from './dto/user.dto';
+import PostgresErrorCode from '../../database/postgresErrorCode.enum';
+import { ClientExceptions } from './enum';
 
 @Injectable()
 export class UserService {
@@ -13,25 +13,27 @@ export class UserService {
     private readonly userRepository: Repository<User>,
   ) {}
 
-  async getUsers() {
+  async getAllUsers(): Promise<Array<User>> {
     return await this.userRepository.find();
   }
 
-  async getUserById(id: string) {
+  async getUserById(id: string): Promise<User> {
     return await this.userRepository.findOne(id);
+  }
+
+  async getUserByField(field: Partial<User>): Promise<User> {
+    return await this.userRepository.findOne(field);
   }
 
   async createUser(input: CreateUserInput): Promise<User> {
     const user = this.userRepository.create(input);
-    user.role = UserRole.GUEST;
-    user.hashPassword = await hash(input.password);
     try {
       await this.userRepository.save(user);
       return user;
     } catch (error) {
       throw new HttpException(
         error.code === PostgresErrorCode.UniqueViolation
-          ? 'User with that email already exists.'
+          ? ClientExceptions.ALREADY_EXISTS
           : error.message,
         error.status,
       );

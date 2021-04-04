@@ -1,44 +1,17 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, ManyToMany, OneToOne } from 'typeorm';
 import { ObjectType, Field } from '@nestjs/graphql';
-
-export enum UserRole {
-  ADMIN = 'admin',
-  AGENT = 'agent',
-  USER = 'user',
-  GUEST = 'guest',
-}
+import { Contract } from './contract.entity';
+import { BasicUser } from './common/basic-user.model';
+import { Base } from './base.entity';
 
 @ObjectType()
 @Entity('user')
-export class User {
-  @Field()
-  @PrimaryGeneratedColumn()
-  id: string;
+export class User extends BasicUser {
+  @Field(() => Base, { nullable: true })
+  @ManyToMany(() => Base, (base) => base.clients)
+  bases: Base[];
 
-  @Field()
-  @Column()
-  firstName: string;
-
-  @Field()
-  @Column()
-  lastName: string;
-
-  @Field()
-  @Column({ unique: true })
-  phone: string;
-
-  @Field()
-  @Column({ unique: true })
-  email: string;
-
-  @Column()
-  hashPassword: string;
-
-  @Field()
-  @Column({
-    type: 'enum',
-    enum: UserRole,
-    default: UserRole.GUEST,
-  })
-  role: UserRole;
+  @Field(() => Contract, { nullable: true })
+  @OneToOne(() => Contract, (contract) => contract.client)
+  contract: Contract;
 }
