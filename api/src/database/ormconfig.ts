@@ -1,26 +1,29 @@
 import { ConnectionOptions } from 'typeorm';
 
-export default {
+const config: ConnectionOptions = {
   type: 'postgres',
   host: process.env.DATABASE_HOST,
   port: Number(process.env.DATABASE_PORT),
   username: process.env.DATABASE_USER,
   password: process.env.DATABASE_PASSWORD,
   database: process.env.DATABASE_NAME,
-  entities: ['dist/entities/*.entity{.ts,.js}'],
+  entities: ['../entities/*.entity{.ts,.js}'],
   // We are using migrations, synchronize should be set to false.
-  synchronize: process.env.NODE_ENV !== 'production',
-  dropSchema: false,
+  synchronize: false,
+  // synchronize: process.env.NODE_ENV !== 'production',
   // Run migrations automatically,
   // you can disable this if you prefer running migration manually.
-  migrationsRun: true,
+  migrationsRun: false,
+  dropSchema: false,
   // logging: ['warn', 'error'],
   // logger: process.env.NODE_ENV === 'production' ? 'file' : 'debug',
   // console.log driven development
   logging: true,
   logger: process.env.NODE_ENV === 'production' ? 'file' : 'advanced-console',
-  migrations: [__dirname + '/dist/config/database/migrations/*.js'],
+  migrations: ['/database/migrations/*{.ts,.js}'],
   cli: {
-    migrationsDir: 'src/config/database/migrations',
+    migrationsDir: __dirname + 'src/database/migrations/',
   },
-} as ConnectionOptions;
+};
+
+export default config;

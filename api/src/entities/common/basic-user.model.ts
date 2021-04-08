@@ -1,8 +1,7 @@
 import { BeforeInsert, Column } from 'typeorm';
 import { Field, ObjectType } from '@nestjs/graphql';
 import { BasicInfo } from './basic-info.model';
-import { IsNotEmpty, IsAlpha, MinLength } from 'class-validator';
-import { hash } from 'argon2';
+import { hash } from 'bcrypt';
 
 export enum UserRole {
   ADMIN = 'SU',
@@ -15,16 +14,10 @@ export enum UserRole {
 export abstract class BasicUser extends BasicInfo {
   @Field()
   @Column()
-  @IsNotEmpty()
-  @IsAlpha()
-  @MinLength(3)
   firstName: string;
 
   @Field()
   @Column()
-  @IsNotEmpty()
-  @IsAlpha()
-  @MinLength(3)
   lastName: string;
 
   @Column()
@@ -32,7 +25,7 @@ export abstract class BasicUser extends BasicInfo {
 
   @BeforeInsert()
   async hashPassword() {
-    this.password = await hash(this.password);
+    this.password = await hash(this.password, 10);
   }
 
   @Field()

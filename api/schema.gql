@@ -43,6 +43,16 @@ input CreateUserInput {
   phone: String!
 }
 
+input logInInput {
+  email: String!
+  password: String!
+}
+
+type logInOutput {
+  jwt: String!
+  user: User!
+}
+
 type Mutation {
   createClient(input: CreateUserInput!): User!
   login(input: logInInput!): logInOutput!
@@ -72,14 +82,4 @@ type Vessel {
   id: String!
   name: String!
   phone: String!
-}
-
-input logInInput {
-  email: String!
-  password: String!
-}
-
-type logInOutput {
-  jwt: String!
-  user: User!
 }

@@ -1,11 +1,11 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { logInInput } from './dto/logIn.dto';
+import { logInInput, logInOutput } from './dto/logIn.dto';
 import { CacheService } from '../../cache/cache.service';
 import { AuthExceptions, AuthTokenName } from './enum';
 import { UserService } from '../user/user.service';
 import { User } from '../../entities/user.entity';
-import { verify } from 'argon2';
+import { compare } from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -15,13 +15,10 @@ export class AuthService {
     private readonly cacheService: CacheService,
   ) {}
 
-  async logIn(
-    { email, password }: logInInput,
-    ctx: any,
-  ): Promise<{ user: User; jwt: string }> {
+  async logIn({ email, password }: logInInput, ctx: any): Promise<logInOutput> {
     const user = await this.userService.getUserByField({ email });
 
-    if (!user || !(await verify(password, user.password))) {
+    if (!user || !(await compare(password, user.password))) {
       throw new Error(AuthExceptions.INVALID_CREDENTIALS);
     }
 
