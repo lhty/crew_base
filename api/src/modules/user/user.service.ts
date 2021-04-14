@@ -1,9 +1,9 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from '../../entities/user.entity';
+import { User } from '../../models/user.entity';
 import { CreateUserInput } from './dto/user.dto';
-import PostgresErrorCode from '../../database/postgresErrorCode.enum';
+import PostgresErrorCode from '../database/postgresErrorCode.enum';
 import { ClientExceptions } from './enum';
 
 @Injectable()
@@ -18,11 +18,11 @@ export class UserService {
   }
 
   async getUserById(id: string): Promise<User> {
-    return await this.userRepository.findOne(id);
+    return await this.userRepository.findOneOrFail(id);
   }
 
   async getUserByField(field: Partial<User>): Promise<User> {
-    return await this.userRepository.findOne(field);
+    return await this.userRepository.findOneOrFail(field);
   }
 
   async createUser(input: CreateUserInput): Promise<User> {

@@ -1,5 +1,5 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
-import { CacheService } from '../cache/cache.service';
+import { CacheService } from '../../modules/cache/cache.service';
 
 @Injectable()
 export class RoleGuard implements CanActivate {

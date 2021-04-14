@@ -1,10 +1,10 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { logInInput, logInOutput } from './dto/logIn.dto';
-import { CacheService } from '../../cache/cache.service';
+import { CacheService } from '../cache/cache.service';
 import { AuthExceptions, AuthTokenName } from './enum';
 import { UserService } from '../user/user.service';
-import { User } from '../../entities/user.entity';
+import { User } from '../../models/user.entity';
 import { compare } from 'bcrypt';
 
 @Injectable()

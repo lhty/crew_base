@@ -1,7 +1,7 @@
 import { UseGuards, ValidationPipe } from '@nestjs/common';
 import { Resolver, Args, Query, Mutation } from '@nestjs/graphql';
-import { User } from '../../entities/user.entity';
-import { AuthGuard } from '../../guards/auth.guard';
+import { User } from '../../models/user.entity';
+import { AuthGuard } from '../../common/guards/auth.guard';
 import { CreateUserInput } from './dto/user.dto';
 import { UserService } from './user.service';
 

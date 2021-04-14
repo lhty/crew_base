@@ -5,7 +5,7 @@
   "scripts": {
     "start": "docker-compose up",
     "stop": "docker-compose down -v",
-    "postinstall": "(cd api && npm prune); (cd web && npm prune)",
+    "postinstall": "(cd api && npm i); (cd web && npm i)",
     "build": "docker-compose up --build"
   },
   "repository": {

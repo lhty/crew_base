@@ -1,9 +1,9 @@
 import { ExecutionContext, UseGuards } from '@nestjs/common';
 import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { logInInput, logInOutput } from './dto/logIn.dto';
-import { AuthGuard } from '../../guards/auth.guard';
+import { AuthGuard } from '../../common/guards/auth.guard';
 import { AuthService } from './auth.service';
-import { User } from '../../entities/user.entity';
+import { User } from '../../models/user.entity';
 
 @Resolver()
 export class AuthResolver {

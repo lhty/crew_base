@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CacheModule } from '../../cache/cache.module';
-import { Agency } from '../../entities/agency.entity';
+import { CacheModule } from '../cache/cache.module';
+import { Agency } from '../../models/agency.entity';
 import { AgencyService } from './agency.service';
 
 @Module({

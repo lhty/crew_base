@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CacheService } from '../../cache/cache.service';
-import { Contract } from '../../entities/contract.entity';
+import { CacheService } from '../cache/cache.service';
+import { Contract } from '../../models/contract.entity';
 
 @Injectable()
 export class ContractService {

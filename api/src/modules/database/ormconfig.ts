@@ -7,7 +7,7 @@ const config: ConnectionOptions = {
   username: process.env.DATABASE_USER,
   password: process.env.DATABASE_PASSWORD,
   database: process.env.DATABASE_NAME,
-  entities: ['../entities/*.entity{.ts,.js}'],
+  entities: ['dist/models/*.entity{.ts,.js}'],
   // We are using migrations, synchronize should be set to false.
   synchronize: false,
   // synchronize: process.env.NODE_ENV !== 'production',
@@ -20,9 +20,9 @@ const config: ConnectionOptions = {
   // console.log driven development
   logging: true,
   logger: process.env.NODE_ENV === 'production' ? 'file' : 'advanced-console',
-  migrations: ['/database/migrations/*{.ts,.js}'],
+  migrations: ['dist/migrations/*{.ts,.js}'],
   cli: {
-    migrationsDir: __dirname + 'src/database/migrations/',
+    migrationsDir: __dirname + 'src/migrations/',
   },
 };
 
