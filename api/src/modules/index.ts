@@ -5,13 +5,16 @@ import { CompanyModule } from './company/company.module';
 import { ContractModule } from './contract/contract.module';
 import { UserModule } from './user/user.module';
 
-import { DatabaseModule } from './database/database.module';
-import { GraphqlModule } from './graphql/graphql.module';
 import { CacheModule } from './cache/cache.module';
 
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { GraphQLModule } from '@nestjs/graphql';
+import * as orm_config from '../config/ormconfig';
+import * as graphql_config from '../config/graphqlconfig';
+
 export const Modules = [
-  DatabaseModule,
-  GraphqlModule,
+  TypeOrmModule.forRoot(orm_config),
+  GraphQLModule.forRoot(graphql_config),
   CacheModule,
   AuthModule,
   BaseModule,

@@ -1,8 +1,9 @@
-import { Entity, PrimaryGeneratedColumn, ManyToOne, Column } from 'typeorm';
+import { Entity, ManyToOne, Column } from 'typeorm';
 import { ObjectType, Field } from '@nestjs/graphql';
-import { Agency } from './agency.entity';
-import { Vessel } from './vessel.entity';
-import { User } from './user.entity';
+import { EntityHelper } from '../../common/helpers/entityHelper';
+import { Agency } from '../agency/agency.entity';
+import { Vessel } from '../company/vessel.entity';
+import { User } from '../user/user.entity';
 
 export enum ContractStatus {
   PENDING = 'PENDING',
@@ -12,11 +13,7 @@ export enum ContractStatus {
 }
 @ObjectType()
 @Entity('contract')
-export class Contract {
-  @Field()
-  @PrimaryGeneratedColumn()
-  id: string;
-
+export class Contract extends EntityHelper {
   @Field(() => Agency)
   @ManyToOne(() => Agency, (agency) => agency.contracts)
   agency: Agency;

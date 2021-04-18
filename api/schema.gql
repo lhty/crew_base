@@ -3,34 +3,37 @@
 # ------------------------------------------------------
 
 type Agency {
-  address: String
   base: Base!
   contracts: [Contract!]!
-  email: String!
+  createdAt: DateTime!
   id: String!
   name: String!
-  phone: String!
+  updatedAt: DateTime!
 }
 
 type Base {
   agency: Agency!
   clients: [User!]!
+  createdAt: DateTime!
   id: String!
+  updatedAt: DateTime!
 }
 
 type Company {
-  address: String
-  email: String!
+  createdAt: DateTime!
   fleet: Vessel
   id: String!
-  phone: String!
+  name: String!
+  updatedAt: DateTime!
 }
 
 type Contract {
   agency: Agency!
   client: User!
+  createdAt: DateTime!
   id: String!
   status: String!
+  updatedAt: DateTime!
   vessel: Vessel!
 }
 
@@ -43,15 +46,10 @@ input CreateUserInput {
   phone: String!
 }
 
-input logInInput {
-  email: String!
-  password: String!
-}
-
-type logInOutput {
-  jwt: String!
-  user: User!
-}
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
 
 type Mutation {
   createClient(input: CreateUserInput!): User!
@@ -68,18 +66,32 @@ type User {
   address: String
   bases: Base
   contract: Contract
+  createdAt: DateTime!
   email: String!
   firstName: String!
   id: String!
   lastName: String!
   phone: String!
   role: String!
+  updatedAt: DateTime!
 }
 
 type Vessel {
   company: Company
   contracts: [Contract!]
+  createdAt: DateTime!
   id: String!
   name: String!
   phone: String!
+  updatedAt: DateTime!
+}
+
+input logInInput {
+  email: String!
+  password: String!
+}
+
+type logInOutput {
+  jwt: String!
+  user: User!
 }

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CacheService } from '../cache/cache.service';
-import { Agency } from '../../models/agency.entity';
+import { Agency } from './agency.entity';
 
 @Injectable()
 export class AgencyService {

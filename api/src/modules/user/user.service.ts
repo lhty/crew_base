@@ -1,10 +1,11 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from '../../models/user.entity';
+import { User } from './user.entity';
 import { CreateUserInput } from './dto/user.dto';
-import PostgresErrorCode from '../database/postgresErrorCode.enum';
+
 import { ClientExceptions } from './enum';
+import PostgresErrorCode from '../../common/enums/postgresErrorCode.enum';
 
 @Injectable()
 export class UserService {

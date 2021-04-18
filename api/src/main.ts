@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { setupSecurity } from './security';
+import { setupSecurity } from './config/security';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

@@ -4,10 +4,10 @@ const config: ConnectionOptions = {
   type: 'postgres',
   host: process.env.DATABASE_HOST,
   port: Number(process.env.DATABASE_PORT),
-  username: process.env.DATABASE_USER,
-  password: process.env.DATABASE_PASSWORD,
-  database: process.env.DATABASE_NAME,
-  entities: ['dist/models/*.entity{.ts,.js}'],
+  username: process.env.DATABASE_USER || 'admin',
+  password: process.env.DATABASE_PASSWORD || 'admin',
+  database: process.env.DATABASE_NAME || 'dev',
+  entities: [__dirname + '/../modules/**/*.entity{.ts,.js}'],
   // We are using migrations, synchronize should be set to false.
   synchronize: false,
   // synchronize: process.env.NODE_ENV !== 'production',
@@ -20,10 +20,10 @@ const config: ConnectionOptions = {
   // console.log driven development
   logging: true,
   logger: process.env.NODE_ENV === 'production' ? 'file' : 'advanced-console',
-  migrations: ['dist/migrations/*{.ts,.js}'],
+  migrations: [__dirname + '/../migrations/*{.ts,.js}'],
   cli: {
-    migrationsDir: __dirname + 'src/migrations/',
+    migrationsDir: 'src/migrations',
   },
 };
 
-export default config;
+export = config;

@@ -3,7 +3,7 @@ import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { logInInput, logInOutput } from './dto/logIn.dto';
 import { AuthGuard } from '../../common/guards/auth.guard';
 import { AuthService } from './auth.service';
-import { User } from '../../models/user.entity';
+import { User } from '../user/user.entity';
 
 @Resolver()
 export class AuthResolver {

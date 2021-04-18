@@ -1,21 +1,12 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  OneToMany,
-  ManyToOne,
-} from 'typeorm';
+import { Entity, Column, OneToMany, ManyToOne } from 'typeorm';
 import { ObjectType, Field } from '@nestjs/graphql';
-import { Contract } from './contract.entity';
+import { EntityHelper } from '../../common/helpers/entityHelper';
+import { Contract } from '../contract/contract.entity';
 import { Company } from './company.entity';
 
 @ObjectType()
 @Entity('vessel')
-export class Vessel {
-  @Field()
-  @PrimaryGeneratedColumn()
-  id: string;
-
+export class Vessel extends EntityHelper {
   @Field()
   @Column()
   name: string;

@@ -4,8 +4,8 @@ import { logInInput, logInOutput } from './dto/logIn.dto';
 import { CacheService } from '../cache/cache.service';
 import { AuthExceptions, AuthTokenName } from './enum';
 import { UserService } from '../user/user.service';
-import { User } from '../../models/user.entity';
 import { compare } from 'bcrypt';
+import { User } from '../user/user.entity';
 
 @Injectable()
 export class AuthService {
